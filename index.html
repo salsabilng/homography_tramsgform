@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homography Rectify &amp; Measure</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Homography Rectify &amp; Measure</h1>
+    <div class="toolbar">
+      <label class="btn primary">Open image<input type="file" id="file-input" accept="image/*" hidden></label>
+      <button id="btn-paste" class="btn">Paste (Ctrl+V)</button>
+      <button id="btn-rectify" class="btn">Rectify</button>
+      <button id="btn-edit-corners" class="btn">Edit corners</button>
+      <button id="btn-reset" class="btn">Reset</button>
+      <span class="sep"></span>
+      <label class="ctl">Tool
+        <select id="tool-select">
+          <option value="scale">Scale line</option>
+          <option value="measure" selected>Measure</option>
+        </select>
+      </label>
+      <label class="ctl">Unit
+        <select id="unit-select">
+          <option value="mm">mm</option>
+          <option value="cm" selected>cm</option>
+          <option value="m">m</option>
+          <option value="in">in</option>
+        </select>
+      </label>
+      <span class="sep"></span>
+      <button id="btn-export-png" class="btn">Export PNG</button>
+      <button id="btn-export-csv" class="btn">Export CSV</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="stage" id="stage">
+      <canvas id="canvas"></canvas>
+      <div class="hint" id="hint">Open or paste an image to start (Ctrl+V).</div>
+    </div>
+
+    <aside class="panel">
+      <section>
+        <h2>Status</h2>
+        <p id="status-text">No image loaded.</p>
+        <p id="aspect-badge" class="badge hidden"></p>
+      </section>
+
+      <section>
+        <h2>Object dimensions <span class="opt">optional</span></h2>
+        <p class="help">Real size of the rectangle. Guarantees exact aspect and can auto-set the scale.</p>
+        <div class="row">
+          <input type="number" id="dims-w" min="0" step="any" placeholder="Width">
+          <input type="number" id="dims-h" min="0" step="any" placeholder="Height">
+          <select id="dims-unit">
+            <option value="mm">mm</option>
+            <option value="cm" selected>cm</option>
+            <option value="m">m</option>
+            <option value="in">in</option>
+          </select>
+        </div>
+      </section>
+
+      <section>
+        <h2>Scale calibration</h2>
+        <p id="scale-status" class="help">Not calibrated. Select the “Scale line” tool, draw a line on a known length, then set its real length below.</p>
+        <div class="row">
+          <input type="number" id="scale-length" min="0" step="any" placeholder="Real length">
+          <select id="scale-unit">
+            <option value="mm">mm</option>
+            <option value="cm" selected>cm</option>
+            <option value="m">m</option>
+            <option value="in">in</option>
+          </select>
+          <button id="btn-set-scale" class="btn">Set scale</button>
+        </div>
+        <button id="btn-clear-scale" class="btn small">Clear scale</button>
+      </section>
+
+      <section>
+        <h2>Measurements</h2>
+        <ul id="measure-list" class="measure-list"></ul>
+      </section>
+    </aside>
+  </main>
+
+  <footer id="message"></footer>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
